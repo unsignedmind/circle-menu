@@ -1,0 +1,21 @@
+.quarter {
+  position: absolute;
+  width: 100px;
+  height: 100px;
+
+  &--red {
+    fill: #882222;
+  }
+
+  &--yellow {
+    fill: #888234;
+  }
+
+  &--blue {
+    fill: #1c2a88;
+  }
+
+  &--green {
+    fill: #3c883c;
+  }
+}

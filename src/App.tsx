@@ -1,25 +1,41 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from 'react';
+import './App.scss';
+import Quarter, { QuarterPosition } from './components/Quarter';
 
 function App() {
+  const [rotationDegree, setRotationDegree] = useState(45);
+
+  const rotationStyle = {
+    transform: `rotate(${rotationDegree}deg) scale(20)`,
+  }
+  const handleWheel = (event: WheelEvent) => {
+    if (event.deltaY < 0) {
+      setRotationDegree(rotationDegree + 90);
+    } else if (event.deltaY > 0) {
+      setRotationDegree(rotationDegree - 90);
+    }
+  };
+
+  useEffect(() => {
+    // Add event listener
+    window.addEventListener('wheel', handleWheel);
+
+    // Cleanup the event listener on component unmount
+    return () => {
+      window.removeEventListener('wheel', handleWheel);
+    };
+  }, [rotationDegree]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <div className="circle" style={rotationStyle}>
+        <Quarter color={'red'} position={QuarterPosition.PosOne}/>
+        <Quarter color={'blue'} position={QuarterPosition.PosTwo}/>
+        <Quarter color={'yellow'} position={QuarterPosition.PosThree}/>
+        <Quarter color={'green'} position={QuarterPosition.PosFour}/>
+      </div>
+
+    </>
   );
 }
 
